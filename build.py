@@ -40,7 +40,7 @@ for config_file in glob.iglob('*/server.yaml'):
     )
 
     for line in resp:
-        if LOG_LEVEL != 'DEBUG':
+        if LOG_LEVEL == 'DEBUG':
             print(line)
 
         if 'error' in line:
