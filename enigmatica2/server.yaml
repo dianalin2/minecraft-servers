@@ -1,0 +1,6 @@
+id: enigmatica2-1.12
+
+build:
+  context: .
+  dockerfile: Dockerfile
+
