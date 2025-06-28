@@ -28,4 +28,4 @@ jobs:
         run: |
           python build.py
         env:
-          TAG_PREFIX: ghcr.io/dianalin2/minecraft-servers
+          TAG_PREFIX: ghcr.io/dianalin2/minecraft-server
