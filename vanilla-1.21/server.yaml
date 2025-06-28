@@ -1,0 +1,8 @@
+id: vanilla-1.21
+
+build:
+  context: .
+  dockerfile: Dockerfile
+  args:
+    VERSION: "1.21"
+    TYPE: "vanilla"
