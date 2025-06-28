@@ -10,6 +10,8 @@ TAG_PREFIX = os.getenv('TAG_PREFIX', None)
 if not TAG_PREFIX:
     raise ValueError("TAG_PREFIX environment variable is not set. Please set it to the desired image tag prefix.")
 
+LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO').upper()
+
 for config_file in glob.iglob('*/server.yaml'):
     print(f'Building image from {config_file}')
 
@@ -36,7 +38,12 @@ for config_file in glob.iglob('*/server.yaml'):
     )
 
     for line in resp:
+        if LOG_LEVEL != 'DEBUG':
+            print(line)
+
         if 'error' in line:
             print(f"Error pushing image {TAG_PREFIX}:{config['id']}: {line['error']}")
         else:
             print(line)
+
+    print(f"Successfully pushed image {TAG_PREFIX}:{config['id']}")
