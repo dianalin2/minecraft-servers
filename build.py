@@ -45,7 +45,5 @@ for config_file in glob.iglob('*/server.yaml'):
 
         if 'error' in line:
             print(f"Error pushing image {tag}: {line['error']}")
-        else:
-            print(line)
 
     print(f"Successfully pushed image {tag}")
