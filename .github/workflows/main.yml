@@ -13,7 +13,7 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
       - name: Log in to GitHub Container Registry
-        uses: docker/login-action@v2
+        uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
@@ -28,4 +28,4 @@ jobs:
         run: |
           python build.py
         env:
-          TAG_PREFIX: ghcr.io/dianalin2/minecraft-server
+          TAG_PREFIX: ghcr.io/dianalin2/minecraft-servers
