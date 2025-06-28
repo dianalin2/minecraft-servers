@@ -6,7 +6,7 @@ from os import path
 
 client = docker.from_env()
 
-IMAGE_NAME = os.getenv('TAG_PREFIX', None)
+IMAGE_NAME = os.getenv('IMAGE_NAME', None)
 if not IMAGE_NAME:
     raise ValueError("IMAGE_NAME environment variable is not set. Please set it to the desired image tag prefix.")
 
