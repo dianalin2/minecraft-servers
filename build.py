@@ -6,9 +6,9 @@ from os import path
 
 client = docker.from_env()
 
-TAG_PREFIX = os.getenv('TAG_PREFIX', None)
-if not TAG_PREFIX:
-    raise ValueError("TAG_PREFIX environment variable is not set. Please set it to the desired image tag prefix.")
+IMAGE_NAME = os.getenv('TAG_PREFIX', None)
+if not IMAGE_NAME:
+    raise ValueError("IMAGE_NAME environment variable is not set. Please set it to the desired image tag prefix.")
 
 LOG_LEVEL = os.getenv('LOG_LEVEL', 'INFO').upper()
 
@@ -19,19 +19,21 @@ for config_file in glob.iglob('*/server.yaml'):
         config = yaml.safe_load(file)
 
     context_dir = path.abspath(path.join(path.dirname(config_file), config['build'].get('context', '.')))
+
+    tag = f"{IMAGE_NAME}:{config['id']}"
     
     # build
     client.images.build(
         path=context_dir,
         dockerfile=path.join(context_dir, config['build'].get('dockerfile', 'Dockerfile')),
         buildargs=config['build'].get('args', {}),
-        tag=f"{TAG_PREFIX}:{config['id']}",
+        tag=tag,
     )
 
-    print('Pushing image: ', f"{TAG_PREFIX}:{config['id']}")
+    print('Pushing image:', tag)
 
     resp = client.images.push(
-        repository=f"{TAG_PREFIX}",
+        repository=f"{IMAGE_NAME}",
         tag=config['id'],
         stream=True,
         decode=True
@@ -42,8 +44,8 @@ for config_file in glob.iglob('*/server.yaml'):
             print(line)
 
         if 'error' in line:
-            print(f"Error pushing image {TAG_PREFIX}:{config['id']}: {line['error']}")
+            print(f"Error pushing image {tag}: {line['error']}")
         else:
             print(line)
 
-    print(f"Successfully pushed image {TAG_PREFIX}:{config['id']}")
+    print(f"Successfully pushed image {tag}")
