@@ -26,11 +26,17 @@ for config_file in glob.iglob('*/server.yaml'):
         tag=f"{TAG_PREFIX}:{config['id']}",
     )
 
-    print('Pushing image...')
+    print('Pushing image: ', f"{TAG_PREFIX}:{config['id']}")
 
-    client.images.push(
+    resp = client.images.push(
         repository=f"{TAG_PREFIX}",
         tag=config['id'],
         stream=True,
         decode=True
     )
+
+    for line in resp:
+        if 'error' in line:
+            print(f"Error pushing image {TAG_PREFIX}:{config['id']}: {line['error']}")
+        else:
+            print(line)
