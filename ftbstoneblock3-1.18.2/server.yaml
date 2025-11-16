@@ -1,0 +1,5 @@
+id: ftbevolution-1.21.1
+
+build:
+  context: .
+  dockerfile: Dockerfile
