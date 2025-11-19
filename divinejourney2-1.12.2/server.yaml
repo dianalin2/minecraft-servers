@@ -1,0 +1,6 @@
+id: divinejourney2-1.12.2
+
+build:
+  context: .
+  dockerfile: Dockerfile
+
