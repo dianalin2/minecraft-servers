@@ -43,9 +43,6 @@ for config_file in glob.iglob('*/server.yaml'):
         decode=True
     )
 
-    # Clean up local image
-    client.images.remove(image=tag, force=True)
-
     for line in resp:
         if LOG_LEVEL == 'DEBUG':
             print(line)
