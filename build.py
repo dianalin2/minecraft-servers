@@ -17,6 +17,10 @@ for config_file in glob.iglob('*/server.yaml'):
 
     with open(config_file, 'r') as file:
         config = yaml.safe_load(file)
+    
+    if config.get('ignore', False):
+        print(f'Skipping {config_file} as it is marked to be ignored.')
+        continue
 
     context_dir = path.abspath(path.join(path.dirname(config_file), config['build'].get('context', '.')))
 

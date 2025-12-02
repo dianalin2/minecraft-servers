@@ -3,4 +3,4 @@ id: eternal2-1.20.1
 build:
   context: .
   dockerfile: Dockerfile
-
+ignore: true
